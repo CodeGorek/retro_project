@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>RETRO_ARCADE_STORE // 198X</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Google Fonts VT323 -->
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    <style>
+        /* Estética CRT, Fondo Arcade y Textura de Píxeles */
+        body {
+            background-color: #05020d;
+            /* Fondo con imagen temática arcade retro y gradiente oscuro de alta legibilidad */
+            background-image: linear-gradient(rgba(5, 2, 13, 0.90), rgba(5, 2, 13, 0.90)), 
+                              url('https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1600');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #00ffcc;
+            font-family: 'VT323', monospace;
+            font-size: 24px;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Patrón de grilla de píxeles (efecto 8-bit dot matrix) */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background-image: radial-gradient(rgba(0, 255, 204, 0.07) 1px, transparent 0);
+            background-size: 6px 6px;
+            z-index: 99998;
+            pointer-events: none;
+        }
+
+        /* Efecto de líneas de barrido (Scanlines) de monitor CRT antiguo */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%), 
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+            z-index: 99999;
+            background-size: 100% 4px, 4px 100%;
+            pointer-events: none;
+        }
+
+        .navbar, .card, footer {
+            background-color: rgba(18, 8, 38, 0.95) !important;
+            border: 2px solid #ff007f !important;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5), inset 0 0 10px rgba(0, 255, 204, 0.1);
+        }
+
+        h1, h2, h3, h5 {
+            text-shadow: 0 0 8px rgba(255, 0, 127, 0.8);
+        }
+
+        .btn-retro {
+            border: 2px solid #ffcc00;
+            color: #ffcc00;
+            background: rgba(255, 204, 0, 0.05);
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            transition: all 0.2s ease-in-out;
+            box-shadow: 0 0 8px rgba(255, 204, 0, 0.3);
+        }
+
+        .btn-retro:hover {
+            background-color: #ffcc00;
+            color: #0b061a;
+            box-shadow: 0 0 20px #ffcc00;
+        }
+
+        .card img {
+            height: 190px;
+            object-fit: cover;
+            border-bottom: 2px solid #00ffcc;
+            filter: contrast(110%) saturate(120%);
+        }
+
+        table { color: #00ffcc !important; }
+        th { color: #ffcc00 !important; background-color: rgba(18, 8, 38, 0.95) !important; text-shadow: 0 0 5px #ffcc00; }
+        td { background-color: rgba(18, 8, 38, 0.95) !important; color: #00ffcc !important; border-color: #ff007f !important; }
+
+        input, textarea {
+            background-color: #05020d !important;
+            border: 2px solid #00ffcc !important;
+            color: #00ffcc !important;
+            font-family: 'VT323', monospace;
+            font-size: 22px !important;
+            box-shadow: inset 0 0 5px rgba(0,255,204,0.2);
+        }
+
+        input:focus, textarea:focus {
+            color: #00ffcc !important;
+            box-shadow: 0 0 15px #00ffcc !important;
+            border-color: #ffcc00 !important;
+        }
+    </style>
+</head>
+<body class="container py-4">
+   <!-- Reemplaza la etiqueta <header> / navbar-brand en store/templates/store/base.html con esto: -->
+    <header class="navbar navbar-expand-lg px-4 mb-4 rounded align-items-center">
+        <a class="navbar-brand fs-2 fw-bold m-0 text-decoration-none" href="{% url 'product_list' %}" style="text-shadow: 0 0 12px #ff007f;">
+            <i class="bi bi-joystick text-warning"></i> <span class="text-warning">ARCADE VAULT</span> <span class="text-info">// 198X</span>
+        </a>
+        <div class="ms-auto d-flex align-items-center gap-2 flex-wrap">
+            <a href="{% url 'product_list' %}" class="btn btn-retro"><i class="bi bi-grid-3x3-gap-fill"></i> [CATÁLOGO]</a>
+            <a href="{% url 'view_cart' %}" class="btn btn-retro"><i class="bi bi-cart3"></i> [CARRITO]</a>
+            {% if user.is_authenticated %}
+                <span class="text-warning fs-5 px-2"><i class="bi bi-person-fill-gear"></i> USER: {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="btn btn-retro border-danger text-danger"><i class="bi bi-power"></i> [SALIR]</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-retro"><i class="bi bi-box-arrow-in-right"></i> [LOGIN]</a>
+                <a href="{% url 'register' %}" class="btn btn-retro"><i class="bi bi-person-plus-fill"></i> [REGISTRO]</a>
+            {% endif %}
+        </div>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

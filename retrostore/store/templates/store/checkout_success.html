@@ -1,0 +1,10 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<div style="text-align: center; margin-top: 40px; border: 3px solid #00ffcc; padding: 30px; background: #150b2e;">
+    <h2 style="color: #ffcc00; font-size: 40px;">&gt;&gt; ¡COMPRA EXITOSA! &lt;&lt;</h2>
+    <p>TRANSACTION_COMPLETE // Simulacro de pago aprobado con éxito.</p>
+    <p style="font-size: 20px; color: #888;">Tus juegos retro virtuales están listos para ser despachados.</p>
+    <br>
+    <a href="{% url 'product_list' %}" class="btn-retro" style="font-size: 26px;">[VOLVER AL CATÁLOGO]</a>
+</div>
+{% endblock %}

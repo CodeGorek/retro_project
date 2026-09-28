@@ -1,0 +1,9 @@
+{% extends 'store/base.html' %}
+{% block content %}
+<h2>&gt;&gt; LOGIN DE JUGADOR</h2>
+<form method="post" style="max-width: 400px; border: 2px solid #ff007f; padding: 20px; background: #150b2e;">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn-retro" style="margin-top: 10px;">[CONECTAR]</button>
+</form>
+{% endblock %}
